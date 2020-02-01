@@ -1,15 +1,13 @@
 <script>
 import Table from './components/table.svelte';
-import InfoBox, { updateUserToDisplay } from './components/info-box.svelte';
+import InfoBox from './components/info-box.svelte';
 
-function test(params) {
-    updateUserToDisplay(params.detail.id);
-}
+let userToDisplayId = undefined;
 </script>
 
 <main>
-    <Table on:display-user={test}/>
-    <InfoBox/>
+    <Table on:display-user={(event) => userToDisplayId = event.detail.id }/>
+    <InfoBox userToDisplayId={userToDisplayId}/>
 </main>
 
 <style>

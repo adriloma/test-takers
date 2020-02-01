@@ -1,13 +1,27 @@
-<script context="module">
-let userToDisplay = undefined;
+<script>
+import { writable } from 'svelte/store';
+
+export let userToDisplayId = undefined;
+ let userToDisplay = undefined;
+
+$: {
+            if (userToDisplayId !== undefined) {
+                    getUser(userToDisplayId)
+                    .then((user) => {
+                        debugger;
+                        userToDisplay = user;
+                    });
+            }
+}
 /**
  * Updates user to be displayed on the ser info box
  * @params id:number - id of the user to fetch
  **/
     export function updateUserToDisplay(id) {
-        return getUser(id)
+        getUser(id)
             .then((user) => {
-                return user;
+                debugger;
+                userToDisplay = user;
             });
     }
     /**

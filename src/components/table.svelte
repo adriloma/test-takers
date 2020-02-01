@@ -51,10 +51,10 @@
      * @returns : promise - promise containing the list of users
      */
     function getUsers(url) {
-               return  fetch(url)
-                    .then((response) => {
-                        return response.json();
-                    });
+        return  fetch(url)
+            .then((response) => {
+                return response.json();
+            });
     }
 
     /**
@@ -65,6 +65,9 @@
         setTimeout(() => updateListOfUsers(), 500);
     }
 
+    /**
+     * Dispatch an event to notify that a table element has been selected
+     */
     function dispatchUserSelection(id) {
         dispatch('display-user', {id: id})
     }
