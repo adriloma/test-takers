@@ -1,7 +1,8 @@
 <script>
 
-    let numberOfPages = 1;
+    let numberOfPages = 0;
     let itemsPerPage = 10;
+    let stringToFind = '';
     let users = [];
 
     /**
@@ -19,7 +20,9 @@
     /**
      *  Gets the total number of entities so we can calculate the number of
      *  table pages.
-     * TODO - Replace mocked answer once API implements endpoint.
+     * TODO - Replace mocked answer once API implements endpoint. We should implement this
+     * endpoint because on large table of data we can't ask for every item and calculate the
+     * quantity of them on frontend.
      * @returns - total number of entities to request for
     */
     function getTotalNumberOfItems() {
@@ -33,12 +36,18 @@
      */
     function loadListOfUsers(currentPage = 0) {
         const offset = currentPage * itemsPerPage;
-        fetch(`https://hr.oat.taocloud.org/v1/users?limit=${itemsPerPage}&offset=${offset}`)
+        let url =`https://hr.oat.taocloud.org/v1/users?limit=${itemsPerPage}&offset=${offset}`;
+        if (stringToFind !== '') {
+            url += `&name=${stringToFind}`;
+        }
+        console.log(url);
+        fetch(url)
             .then((response) => {
                 return response.json();
             })
             .then((listedUsers) => {
                users = [...listedUsers];
+               console.log(users);
             });
     }
 
@@ -63,7 +72,8 @@
 	<button on:click={getUser}> test me!</button>
     <table>
         <thead>
-            <th>-</th>
+
+            <th><input type='text' bind:value={stringToFind} on:input={() => {loadListOfUsers()}}></th>
             <th>First name</th>
             <th>Last name</th>
         </thead>
