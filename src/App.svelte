@@ -1,10 +1,28 @@
 <script>
-	export let name;
+
+    function init() {
+        fetch('https://hr.oat.taocloud.org/v1/users?limit=2000&offset=0')
+            .then((response) => {
+                return response.json();
+            })
+            .then((myJson) => {
+                console.log(myJson);
+            });
+    }
+    init();
+    function getUser() {
+        fetch('https://hr.oat.taocloud.org/v1/user/0')
+            .then((response) => {
+                return response.json();
+            })
+            .then((myJson) => {
+                console.log(myJson);
+            });
+    }
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<button on:click={getUser}> test me!</button>
 </main>
 
 <style>
