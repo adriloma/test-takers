@@ -1,13 +1,13 @@
-<script>
+<script context="module">
 let userToDisplay = undefined;
 /**
  * Updates user to be displayed on the ser info box
  * @params id:number - id of the user to fetch
  **/
-    function updateUserToDisplay(id) {
-        getUser(id)
+    export function updateUserToDisplay(id) {
+        return getUser(id)
             .then((user) => {
-                userToDisplay = user;
+                return user;
             });
     }
     /**

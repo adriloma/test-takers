@@ -1,17 +1,16 @@
 <script>
-
+    import { onMount, createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
     let numberOfPages = 0;
     let itemsPerPage = 10;
     let stringToFind = '';
     let users = [];
-
     /**
-     * inits the component loading the initial list of users
+     * Initialize user list when component inits
      */
-    function init() {
+    onMount(async () => {
         updateListOfUsers();
-    }
-
+    })
     /**
      *  Gets a list of users considering the current page, the items per page, and the string to find for.
      * FIrst asks API how many users will be displayed to calculate pagination, and once the
@@ -66,12 +65,14 @@
         setTimeout(() => updateListOfUsers(), 500);
     }
 
- init();
+    function dispatchUserSelection(id) {
+        dispatch('display-user', {id: id})
+    }
+
 </script>
 
     <input type='text' placeholder='search on table...' title='Type something' bind:value={stringToFind} on:input={() => {filtersUpdated()}}>
     <select bind:value={itemsPerPage} on:change={() => {updateListOfUsers()}}>
-        <option value='05'>05</option>
         <option value='10' selected>10</option>
         <option value='20'>20</option>
         <option value='30'>30</option>
@@ -84,8 +85,8 @@
             <th>Last name</th>
         </thead>
         <tbody>
-            {#each users as user (user.userId)}
-            <tr on:click={() => updateUserToDisplay(user.userId)}>
+            {#each users  as user (user.userId)}
+            <tr on:click={() => dispatchUserSelection(user.userId)}>
                 <td>{user.userId}</td>
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>

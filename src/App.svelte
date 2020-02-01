@@ -1,10 +1,14 @@
 <script>
 import Table from './components/table.svelte';
-import InfoBox from './components/info-box.svelte';
+import InfoBox, { updateUserToDisplay } from './components/info-box.svelte';
+
+function test(params) {
+    updateUserToDisplay(params.detail.id);
+}
 </script>
 
 <main>
-    <Table/>
+    <Table on:display-user={test}/>
     <InfoBox/>
 </main>
 
