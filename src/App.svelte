@@ -4,6 +4,7 @@
     let itemsPerPage = 10;
     let stringToFind = '';
     let users = [];
+    let userToDisplay = undefined;
 
     /**
      * inits the component loading the initial list of users
@@ -66,18 +67,34 @@
         setTimeout(() => updateListOfUsers(), 500);
     }
 
+/**
+ * Updates user to be displayed on the ser info box
+ * @params id:number - id of the user to fetch
+ **/
+    function updateUserToDisplay(id) {
+        getUser(id)
+            .then((user) => {
+                userToDisplay = user;
+                console.log(userToDisplay);
+            });
+    }
     /**
      * Gets a user information
-     * TODO - Removed mocked user id
+     * @params id: number - id of the user to fetch
+     * @returns promise - promise containing the feteched user info
     */
-    function getUser() {
-        fetch('https://hr.oat.taocloud.org/v1/user/0')
+    function getUser(id) {
+        return fetch(`https://hr.oat.taocloud.org/v1/user/${id}`)
             .then((response) => {
                 return response.json();
-            })
-            .then((myJson) => {
-                console.log(myJson);
             });
+    }
+
+    /**
+     * Cleans current uset to display and sets it to undefined
+     */
+    function unsetUserToDisplay() {
+        userToDisplay = undefined;
     }
 
  init();
@@ -100,7 +117,7 @@
         </thead>
         <tbody>
             {#each users as user (user.userId)}
-            <tr>
+            <tr on:click={() => updateUserToDisplay(user.userId)}>
                 <td>{user.userId}</td>
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>
@@ -116,6 +133,18 @@
                 </li>
             {/each}
         </ul>
+    {/if}
+
+    {#if userToDisplay !== undefined}
+        <div class='user-info-box'>
+            <img src="{userToDisplay.picture}" alt="{userToDisplay.firstName + ' ' + userToDisplay.lastName}">
+            <div>
+                <p><strong>{`${userToDisplay.title } ${userToDisplay.firstName} ${userToDisplay.lastName}` }</strong></p>
+                <p><strong>email: </strong>{userToDisplay.email}</p>
+                <p><strong>address: </strong>{userToDisplay.address}</p>
+            </div>
+            <button on:click={unsetUserToDisplay}>close</button>
+        </div>
     {/if}
 </main>
 
@@ -174,6 +203,25 @@
 
     .pagination li a:hover {
         background: #ddd
+    }
+
+    .user-info-box {
+        border: 1px solid black;
+        border-radius: 5px;
+        background: lightyellow;
+        display: flex;
+    }
+
+    .user-info-box img{
+        margin-right: 25px;
+        height: 100px;
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+
+    .user-info-box button {
+        align-self: end;
+        margin-left: auto;
     }
 
 	@media (min-width: 640px) {
