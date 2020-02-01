@@ -7,7 +7,7 @@ let userToDisplayId = undefined;
 
 <main>
     <Table on:display-user={(event) => userToDisplayId = event.detail.id }/>
-    <InfoBox userToDisplayId={userToDisplayId}/>
+    <InfoBox bind:userToDisplayId={userToDisplayId}/>
 </main>
 
 <style>

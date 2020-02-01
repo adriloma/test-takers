@@ -8,7 +8,6 @@ $: {
             if (userToDisplayId !== undefined) {
                     getUser(userToDisplayId)
                     .then((user) => {
-                        debugger;
                         userToDisplay = user;
                     });
             }
@@ -20,7 +19,6 @@ $: {
     export function updateUserToDisplay(id) {
         getUser(id)
             .then((user) => {
-                debugger;
                 userToDisplay = user;
             });
     }
@@ -41,6 +39,7 @@ $: {
      */
     function unsetUserToDisplay() {
         userToDisplay = undefined;
+        userToDisplayId = undefined;
     }
 
 </script>
