@@ -19,6 +19,7 @@
      * @params currentPage: number - current user page; if it is not provided, a default value of 0 (first page) is assigned
      */
     function updateListOfUsers(currentPage = 0) {
+        debugger;
         const totalNumberOfItems = getTotalNumberOfUsersToList()
             .then((totalNumberOfItems) => {
                 numberOfPages = Math.ceil(totalNumberOfItems / itemsPerPage);
@@ -87,15 +88,22 @@
 	<button on:click={getUser}> test me!</button>
     <table>
         <thead>
-
             <th><input type='text' bind:value={stringToFind} on:input={() => {filtersUpdated()}}></th>
+            <th>
+                <select bind:value={itemsPerPage} on:change={() => {filtersUpdated()}}>
+                    <option value='10'>10</option>
+                    <option value='20'>20</option>
+                    <option value='30'>30</option>
+                    <option value='50'>50</option>
+                </select>
+            </th>
             <th>First name</th>
             <th>Last name</th>
         </thead>
         <tbody>
             {#each users as user (user.userId)}
             <tr>
-                <td>{user.userId + 1}</td>
+                <td>{user.userId}</td>
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>
             </tr>
