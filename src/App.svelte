@@ -19,7 +19,6 @@
      * @params currentPage: number - current user page; if it is not provided, a default value of 0 (first page) is assigned
      */
     function updateListOfUsers(currentPage = 0) {
-        debugger;
         const totalNumberOfItems = getTotalNumberOfUsersToList()
             .then((totalNumberOfItems) => {
                 numberOfPages = Math.ceil(totalNumberOfItems / itemsPerPage);
@@ -85,18 +84,17 @@
 </script>
 
 <main>
-	<button on:click={getUser}> test me!</button>
+    <input type='text' placeholder='search on table...' title='Type something' bind:value={stringToFind} on:input={() => {filtersUpdated()}}>
+    <select bind:value={itemsPerPage} on:change={() => {updateListOfUsers()}}>
+        <option value='05'>05</option>
+        <option value='10' selected>10</option>
+        <option value='20'>20</option>
+        <option value='30'>30</option>
+        <option value='50'>50</option>
+    </select>
     <table>
         <thead>
-            <th><input type='text' bind:value={stringToFind} on:input={() => {filtersUpdated()}}></th>
-            <th>
-                <select bind:value={itemsPerPage} on:change={() => {filtersUpdated()}}>
-                    <option value='10'>10</option>
-                    <option value='20'>20</option>
-                    <option value='30'>30</option>
-                    <option value='50'>50</option>
-                </select>
-            </th>
+            <th>Id</th>
             <th>First name</th>
             <th>Last name</th>
         </thead>
@@ -109,31 +107,73 @@
             </tr>
             {/each}
         </tbody>
-        <tfoot>
-            {#if numberOfPages > 1}
-                {#each Array(numberOfPages) as _, pageIndex}
-                    <button on:click={() => {updateListOfUsers(pageIndex)}}>{pageIndex + 1}</button>
-                {/each}
-            {/if}
-        </tfoot>
     </table>
+    {#if numberOfPages > 1}
+        <ul class='pagination'>
+            {#each Array(numberOfPages) as _, pageIndex}
+                <li>
+                    <a on:click={() => {updateListOfUsers(pageIndex)}}>{pageIndex + 1}</a>
+                </li>
+            {/each}
+        </ul>
+    {/if}
 </main>
 
 <style>
 	main {
-		text-align: center;
 		padding: 1em;
 		max-width: 240px;
 		margin: 0 auto;
 	}
 
-    table, tr, th {
-        border: 1px solid black;
-        border-collapse: collapse;
+    table {
+        text-align: center;
+        width: 100%;
+        border-collapse: collapse
     }
 
-    div.table-pagination {
+    thead {
+        background: #2e2759;
+        color: #fff;
+    }
+    table, tr, th {
+        border: 1px solid black;
+    }
 
+    tr, th, td {
+        padding: 12px
+    }
+
+    tr {
+        cursor:  pointer;
+    }
+
+    tr:nth-child(odd) {
+        background: whitesmoke
+    }
+
+    tr:nth-child(even) {
+        background: lightgray
+    }
+
+    tr:hover {
+        background: lightyellow
+    }
+    .pagination {
+        padding: 0px
+    }
+    .pagination li {
+        display: inline-block;
+    }
+    .pagination li a {
+        text-decoration: none;
+        cursor: pointer;
+        color: #333;
+        padding: 8px 16px;
+    }
+
+    .pagination li a:hover {
+        background: #ddd
     }
 
 	@media (min-width: 640px) {
