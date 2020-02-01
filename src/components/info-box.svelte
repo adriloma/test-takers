@@ -16,7 +16,8 @@ $:  updateUserToDisplay(userToDisplayId);
         getUser(id)
             .then((user) => {
                 userToDisplay = user;
-            });
+            })
+            .catch(() =>  id = undefined);
     }
     /**
      * Gets a user information
@@ -63,6 +64,8 @@ $:  updateUserToDisplay(userToDisplayId);
         border-radius: 5px;
         background: lightyellow;
         display: flex;
+        position: fixed;
+        right: 20px;
     }
 
     .user-info-box img{
