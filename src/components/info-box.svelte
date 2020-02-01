@@ -39,7 +39,7 @@ $:  updateUserToDisplay(userToDisplayId);
     }
 </script>
 
-<main>
+<div class='container'>
     {#if userToDisplay !== undefined}
         <div class='user-info-box'>
             <img src="{userToDisplay.picture}" alt="{userToDisplay.firstName + ' ' + userToDisplay.lastName}">
@@ -48,12 +48,16 @@ $:  updateUserToDisplay(userToDisplayId);
                 <p><strong>email: </strong>{userToDisplay.email}</p>
                 <p><strong>address: </strong>{userToDisplay.address}</p>
             </div>
-            <button on:click={unsetUserToDisplay}>close</button>
+            <a on:click={unsetUserToDisplay}>&#10006;</a>
         </div>
     {/if}
-</main>
+</div>
 
 <style>
+    .container {
+        margin-left: auto;
+        margin-top: 40px;
+    }
     .user-info-box {
         border: 1px solid black;
         border-radius: 5px;
@@ -68,8 +72,9 @@ $:  updateUserToDisplay(userToDisplayId);
         border-bottom: 1px solid black;
     }
 
-    .user-info-box button {
-        align-self: end;
-        margin-left: auto;
+    .user-info-box a {
+        text-decoration: none;
+        cursor: pointer;
+        color: #333;
     }
 </style>

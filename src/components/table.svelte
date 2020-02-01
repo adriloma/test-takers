@@ -74,7 +74,7 @@
         dispatch('display-user', {id: id})
     }
 </script>
-
+<div class='container'>
     <input type='text' placeholder='search on table...' title='Type something' bind:value={stringToFind} on:input={() => {filtersUpdated()}}>
     <select bind:value={itemsPerPage} on:change={() => {updateListOfUsers()}}>
         <option value='10' selected>10</option>
@@ -107,8 +107,12 @@
             {/each}
         </ul>
     {/if}
-
+</div>
 <style>
+
+    .container {
+        width: 60%;
+    }
     table {
         text-align: center;
         width: 100%;

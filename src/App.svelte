@@ -14,7 +14,8 @@
 	main {
 		padding: 1em;
 		max-width: 240px;
-		margin: 0 auto;
+        margin: 0 auto;
+        display: flex;
 	}
 
 	@media (min-width: 640px) {
