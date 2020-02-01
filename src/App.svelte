@@ -59,6 +59,14 @@
     }
 
     /**
+     * As filtering is done on serverside,  In order to avoid a API request on each key press,
+     * a timeout of500ms is set befure updating list of users
+    */
+    function filtersUpdated() {
+        setTimeout(() => updateListOfUsers(), 500);
+    }
+
+    /**
      * Gets a user information
      * TODO - Removed mocked user id
     */
@@ -80,7 +88,7 @@
     <table>
         <thead>
 
-            <th><input type='text' bind:value={stringToFind} on:input={() => {updateListOfUsers()}}></th>
+            <th><input type='text' bind:value={stringToFind} on:input={() => {filtersUpdated()}}></th>
             <th>First name</th>
             <th>Last name</th>
         </thead>
@@ -94,9 +102,11 @@
             {/each}
         </tbody>
         <tfoot>
-            {#each Array(numberOfPages) as _, pageIndex}
-                <button on:click={() => {updateListOfUsers(pageIndex)}}>{pageIndex + 1}</button>
-            {/each}
+            {#if numberOfPages > 1}
+                {#each Array(numberOfPages) as _, pageIndex}
+                    <button on:click={() => {updateListOfUsers(pageIndex)}}>{pageIndex + 1}</button>
+                {/each}
+            {/if}
         </tfoot>
     </table>
 </main>
