@@ -19,3 +19,5 @@ npm run dev
 ```
 
 Navigate to [localhost:5000](http://localhost:5000). You should see the app running.
+
+![Image description](./public/img/example.png)
