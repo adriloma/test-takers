@@ -1,16 +1,19 @@
 <script>
     import { onMount, createEventDispatcher } from 'svelte';
+
     const dispatch = createEventDispatcher();
     let numberOfPages = 0;
     let itemsPerPage = 10;
     let stringToFind = '';
     let users = [];
+
     /**
      * Initialize user list when component inits
      */
     onMount(async () => {
         updateListOfUsers();
     })
+
     /**
      *  Gets a list of users considering the current page, the items per page, and the string to find for.
      * FIrst asks API how many users will be displayed to calculate pagination, and once the
@@ -25,7 +28,6 @@
                 let url =`https://hr.oat.taocloud.org/v1/users?limit=${itemsPerPage}&offset=${offset}&name=${stringToFind}`;
                 getUsers(url)
                     .then((listedUsers) => users = [...listedUsers]);
-
             })
     }
 
@@ -36,7 +38,7 @@
      * implement this endpoint because on large table of data we can't ask for all coincidences and calculate
      * the quantity of them on frontend. Actually at this point is redundant to ask twice
      * for the list of users, but I leave it ready to just change the endpoint
-     * once API implements its before next release.
+     * once API implements it before next release.
      * @returns: promise - a promise with the total number after applying filters
     */
     function getTotalNumberOfUsersToList() {
@@ -58,7 +60,7 @@
     }
 
     /**
-     * As filtering is done on serverside,  In order to avoid a API request on each key press,
+     * filtering is done on server side so In order to avoid a API request on each key press
      * a timeout of500ms is set befure updating list of users
     */
     function filtersUpdated() {
@@ -71,7 +73,6 @@
     function dispatchUserSelection(id) {
         dispatch('display-user', {id: id})
     }
-
 </script>
 
     <input type='text' placeholder='search on table...' title='Type something' bind:value={stringToFind} on:input={() => {filtersUpdated()}}>
@@ -108,7 +109,6 @@
     {/if}
 
 <style>
-
     table {
         text-align: center;
         width: 100%;
@@ -119,6 +119,7 @@
         background: #2e2759;
         color: #fff;
     }
+
     table, tr, th {
         border: 1px solid black;
     }
@@ -158,5 +159,4 @@
     .pagination li a:hover {
         background: #ddd
     }
-
 </style>

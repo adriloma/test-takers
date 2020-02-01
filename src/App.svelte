@@ -1,8 +1,8 @@
 <script>
-import Table from './components/table.svelte';
-import InfoBox from './components/info-box.svelte';
+    import Table from './components/table.svelte';
+    import InfoBox from './components/info-box.svelte';
 
-let userToDisplayId = undefined;
+    let userToDisplayId = undefined;
 </script>
 
 <main>
